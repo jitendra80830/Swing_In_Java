@@ -71,7 +71,6 @@ public class Calculator implements ActionListener{
 		b0.addActionListener(c);
 		b1.addActionListener(c);
 		b2.addActionListener(c);
-		b2.addActionListener(c);
 		b3.addActionListener(c);
 		b4.addActionListener(c);
 		b5.addActionListener(c);
@@ -109,10 +108,77 @@ public class Calculator implements ActionListener{
 		frame.add(panel);
 		frame.setSize(200,200);
 		frame.show();
+		frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
 	}
 	public void actionPerformed(ActionEvent e){
+		String s=e.getActionCommand();
+		System.out.println(s);
+		
+		//if the value is a numbers
+		if(s.charAt(0)>='0' && s.charAt(0)<='9' || s.charAt(0)=='.')
+		{
+			//if operand if present then add to second no
+			if(!s1.equals(""))
+				s2 = s2+s;
+			else
+				s0=s0+s;
+			text.setText(s0+s1+s2);
+		}
+		else if(s.charAt(0)=='C'){
+			//clear the one latter
+			s0=s1=s2="";
+			//set the value of text
+			text.setText(s0+s1+s2);
+		}
+		else if(s.charAt(0)=='='){
+			double te;
+			//store the value
+			if(s1.equals("+"))
+				te=(Double.parseDouble(s0)+Double.parseDouble(s2));
+			else if(s1.equals("-"))
+				te=(Double.parseDouble(s0)-Double.parseDouble(s2));
+			else if(s1.equals("*"))
+				te=(Double.parseDouble(s0)*Double.parseDouble(s2));
+			else 
+				te=(Double.parseDouble(s0)/Double.parseDouble(s2));
+			
+			//set the value of the text
+			text.setText(s0+s1+s2+"="+te);
+			
+			//convert it to string
+			s0=Double.toString(te);
+			s1=s2="";
+		}
+		else{
+			//if there was no operand
+			if(s1.equals("") || s2.equals(""))
+				s1=s;
+			//else evaluate
+			else{
+				double te;
+				//store the value in 1st
+				if(s1.equals("+"))
+					te=(Double.parseDouble(s0)+Double.parseDouble(s2));
+				else if(s1.equals("-"))
+					te=(Double.parseDouble(s0)-Double.parseDouble(s2));
+				else if(s1.equals("*"))
+					te=(Double.parseDouble(s0)*Double.parseDouble(s2));
+				else
+					te=(Double.parseDouble(s0)/Double.parseDouble(s2));
+				//convert it to string
+				s0=Double.toString(te);
+				//place the operator
+				s1=s;
+				//take operand blank
+				s2="";
+			}
+			//set the value to text
+			text.setText(s0+s1+s2);
+		}
 	}
 }
+			
+
 		
 		
 		
